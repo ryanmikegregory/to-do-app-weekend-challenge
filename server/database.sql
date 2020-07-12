@@ -1,5 +1,5 @@
     --database name--
---  weekend-to-do-app --
+    weekend_to_do_app_db
 
     --table structure--
 CREATE TABLE "todolist" (

@@ -13,7 +13,7 @@ function init() {
 
 //TODO capture user input EVENT
 function submitAddTask(event) {
-  // event.preventDefault();
+  event.preventDefault();
   console.log('in submitAddTask');
   let payloadObject = {
     task_name: $('#new-task-input').val(),
@@ -26,7 +26,7 @@ function submitAddTask(event) {
 //grabbing ID attribute created on Delete BTN when appended to DOM
 //passing deleteTask(id) to remove from database using ID
 function deleteTaskOnClick(event) {
-  // event.preventDefault();
+  event.preventDefault();
   const id = $(this).data('idList');
   // alert('Are you sure you want to delete this item?');
   deleteTask(id);
@@ -36,7 +36,8 @@ function updateTaskOnCLick(event) {
   event.preventDefault();
   console.log('updateCompleteOnCLick');
   const id = $(this).data('idList');
-  alert('Are you sure you want to update this item to complete?');
+  // $(this).parent().addClass('greenBackground');
+  // alert('Are you sure you want to update this item to complete?');
   updateTask(id);
 }
 
@@ -49,7 +50,7 @@ function getTodoList() {
     url: '/api/todo',
   })
     .then((response) => {
-      console.log(`in client GET server, response: ${response}`);
+      // console.log(`in client GET server, response: ${response}`);
       render(response);
     })
     .catch((error) => {
@@ -94,7 +95,6 @@ function deleteTask(listId) {
 
 //Ajax PUT route
 function updateTask(listId) {
-  event.preventDefault();
   console.log('in updateTask ');
   $.ajax({
     type: 'PUT',
@@ -117,8 +117,8 @@ function render(todoArray) {
   for (let i = 0; i < todoArray.length; i++) {
     const listItem = todoArray[i];
     $('.ulClass').append(`
-    <ul>
-    <li>${listItem.task_name}
+    <ul class="jsUlList">
+    <li class="jsLiClass">${listItem.task_name}
     <button class="jsCompleteBtn" data-id-List="${listItem.id}">COMPLETE</button>
     <button class="jsDeleteBtn" data-id-List="${listItem.id}">DELETE</button>
     </li>
