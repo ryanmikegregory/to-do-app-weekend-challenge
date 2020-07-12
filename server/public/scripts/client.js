@@ -11,13 +11,24 @@ function init() {
 }
 
 //TODO capture user input EVENT
-function submitAddTask() {
+function submitAddTask(event) {
+  event.preventDefault();
   console.log('in submitAddTask');
   let payloadObject = {
     task_name: $('#new-task-input').val(),
     completed: false,
   };
+  console.log(`payLoadObject: ${payloadObject}`);
   postTodo(payloadObject);
+}
+
+//grabbing ID attribute created on Delete BTN when appended to DOM
+//passing deleteTask(id) to remove from database using ID
+function deleteTaskOnClick(event) {
+  // event.preventDefault();
+  const id = $(this).data('idList');
+  // alert('Are you sure you want to delete this item?');
+  deleteTask(id);
 }
 
 //TODO Ajax GET route
@@ -29,7 +40,7 @@ function getTodoList() {
     url: '/api/todo',
   })
     .then((response) => {
-      console.log('in client GET, server response', response);
+      console.log(`in client GET, server response: ${response}`);
       render(response);
     })
     .catch((error) => {
@@ -46,6 +57,7 @@ function postTodo(todoData) {
     data: todoData,
   })
     .then((response) => {
+      console.log(`in client POST: server response, ${response}`);
       getTodoList();
     })
     .catch((error) => {
@@ -62,20 +74,16 @@ function deleteTask(listId) {
     url: `/api/todo/${listId}`,
   })
     .then((response) => {
-      console.log('in client DELETE, server response', response);
+      console.log(`in client DELETE, server response, ${response}`);
       getTodoList();
     })
     .catch((error) => {
       console.log(`No bueno in DELETE-client ${error}`);
+      alert('error');
     });
 }
 
-function deleteTaskOnClick(event) {
-  event.preventDefault();
-  const id = $(this).data('idList');
-  deleteTask(id);
-}
-
+//RENDER
 //////////////////////////////////
 function render(todoArray) {
   $('.ulClass').empty();
