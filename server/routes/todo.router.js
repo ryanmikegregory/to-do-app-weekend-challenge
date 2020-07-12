@@ -31,4 +31,20 @@ router.post('/', (req, res) => {
     });
 });
 
+router.delete('/:id', (req, res) => {
+  const id = req.params.id;
+  const queryText = `DELETE from "todolist" WHERE "id" = $1;`;
+
+  pool
+    .query(queryText, [id])
+    .then((dbResponse) => {
+      console.log(`All good in DELETE in todo.router ${dbResponse}`);
+      res.sendStatus(200);
+    })
+    .catch((error) => {
+      console.log(`No Bueno in DELETE in todo.router ${error}`);
+      res.sendStatus(500);
+    });
+});
+
 module.exports = router; //export todo.router,js

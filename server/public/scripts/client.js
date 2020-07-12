@@ -7,6 +7,7 @@ function init() {
   console.log(`$ReAdY, in init!`);
   getTodoList();
   $('.addTaskBtn').on('click', submitAddTask);
+  $('.jsListContainer').on('click', '.jsDeleteBtn', deleteTaskOnClick);
 }
 
 //TODO capture user input EVENT
@@ -36,21 +37,6 @@ function getTodoList() {
     });
 }
 
-function deleteTask() {
-  console.log('in deleteTask');
-  $.ajax({
-    type: 'DELETE',
-    url: `/api/todo/${listId}`,
-  })
-    .then((response) => {
-      console.log('in client DELETE, server response', response);
-      getTodoList();
-    })
-    .catch((error) => {
-      console.log(`No bueno in DELETE-client ${error}`);
-    });
-}
-
 //TODO send to server and then database
 //Ajax POST ROUTE
 function postTodo(todoData) {
@@ -65,6 +51,28 @@ function postTodo(todoData) {
     .catch((error) => {
       console.log(`No bueno in POST-client ${error}`);
     });
+}
+
+//Ajax DELETE route
+function deleteTask(list) {
+  event.preventDefault();
+  console.log('in deleteTask');
+  $.ajax({
+    type: 'DELETE',
+    url: `/api/todo/${id}`,
+  })
+    .then((response) => {
+      console.log('in client DELETE, server response', response);
+      getTodoList();
+    })
+    .catch((error) => {
+      console.log(`No bueno in DELETE-client ${error}`);
+    });
+}
+
+function deleteTaskOnClick() {
+  const id = $(this).data('listItemId');
+  deleteTask(id);
 }
 
 function render(todoArray) {
@@ -82,3 +90,4 @@ function render(todoArray) {
 `);
   }
 }
+
