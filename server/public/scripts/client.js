@@ -12,7 +12,7 @@ function init() {
 
 //TODO capture user input EVENT
 function submitAddTask(event) {
-  event.preventDefault();
+  // event.preventDefault();
   console.log('in submitAddTask');
   let payloadObject = {
     task_name: $('#new-task-input').val(),

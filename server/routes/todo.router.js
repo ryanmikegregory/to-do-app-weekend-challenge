@@ -47,4 +47,22 @@ router.delete('/:id', (req, res) => {
     });
 });
 
+router.put('/:id', (req, res) => {
+  const id = req.params.id;
+  const completeBoolean = req.body;
+
+  const queryText = `UPDATE "todolist" SET "completed" = 'true' WHERE "id" = $1;`;
+
+pool
+  .query(queryText, [id])
+  .then((dbResponse) => {
+    console.log(`All good in PUT in todo.router ${dbResponse}`);
+    res.sendStatus(200);
+  })
+  .catch((error) => {
+    console.log(`No Bueno in PUT in todo.router ${error}`);
+    res.sendStatus(500);
+  });
+});
+
 module.exports = router; //export todo.router,js
