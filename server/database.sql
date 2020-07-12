@@ -1,5 +1,5 @@
     --database name--
-    weekend_to_do_app_db
+--weekend-to-do-app--
 
     --table structure--
 CREATE TABLE "todolist" (
@@ -11,3 +11,6 @@ CREATE TABLE "todolist" (
     --first test entry--
 INSERT INTO todolist (task_name, completed)
 VALUES ('Test Task Name', false);
+
+   --UPDATE test query--
+   UPDATE "todolist" SET "completed" = true WHERE "id" = 191;

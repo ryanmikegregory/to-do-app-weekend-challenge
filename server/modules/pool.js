@@ -2,7 +2,7 @@ const pg = require('pg');
 const Pool = pg.Pool;
 
 const pool = new Pool({
-  database: 'weekend_to_do_app_db',
+  database: 'weekend-to-do-app',
   host: 'localhost',
   port: 5432,
   max: 10,
