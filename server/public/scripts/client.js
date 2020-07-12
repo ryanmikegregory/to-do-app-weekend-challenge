@@ -20,9 +20,13 @@ function submitAddTask(event) {
 }
 
 //TODO Ajax GET route
+//TODO retrieve from database and append task to page with delete and complete btns
+function getTodoList(){
+    
+}
+
 
 //TODO send to server and then database
-
 //Ajax POST ROUTE
 function postTodo(todoData) {
   $.ajax({
@@ -38,4 +42,4 @@ function postTodo(todoData) {
     });
 }
 
-//TODO retrieve from database and append task to page with delete and complete btns
+
