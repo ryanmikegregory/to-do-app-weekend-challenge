@@ -8,6 +8,7 @@ function init() {
   getTodoList();
   $('.addTaskBtn').on('click', submitAddTask);
   $('.ulClass').on('click', '.jsDeleteBtn', deleteTaskOnClick);
+  $('.ulClass').on('click', '.jsCompleteBtn', updateTaskOnCLick);
 }
 
 //TODO capture user input EVENT
@@ -31,6 +32,14 @@ function deleteTaskOnClick(event) {
   deleteTask(id);
 }
 
+function updateTaskOnCLick(event) {
+  event.preventDefault();
+  console.log('updateCompleteOnCLick');
+  const id = $(this).data('idList');
+  alert('Are you sure you want to update this item to complete?');
+  updateTask(id);
+}
+
 //TODO Ajax GET route
 //TODO retrieve from database and append task to page with delete and complete btns
 function getTodoList() {
@@ -40,11 +49,11 @@ function getTodoList() {
     url: '/api/todo',
   })
     .then((response) => {
-      console.log(`in client GET, server response: ${response}`);
+      console.log(`in client GET server, response: ${response}`);
       render(response);
     })
     .catch((error) => {
-      console.log(`No bueno in GET-client ${error}`);
+      console.log(`No bueno in GET-client, error: ${error}`);
     });
 }
 
@@ -57,11 +66,11 @@ function postTodo(todoData) {
     data: todoData,
   })
     .then((response) => {
-      console.log(`in client POST: server response, ${response}`);
+      console.log(`in client POST: server, response: ${response}`);
       getTodoList();
     })
     .catch((error) => {
-      console.log(`No bueno in POST-client ${error}`);
+      console.log(`No bueno in POST-client, error: ${error}`);
     });
 }
 
@@ -74,11 +83,29 @@ function deleteTask(listId) {
     url: `/api/todo/${listId}`,
   })
     .then((response) => {
-      console.log(`in client DELETE, server response, ${response}`);
+      console.log(`in client DELETE, server response: ${response}`);
       getTodoList();
     })
     .catch((error) => {
-      console.log(`No bueno in DELETE-client ${error}`);
+      console.log(`No bueno in DELETE-client, error: ${error}`);
+      alert('error');
+    });
+}
+
+//Ajax PUT route
+function updateTask(listId) {
+  event.preventDefault();
+  console.log('in updateTask ');
+  $.ajax({
+    type: 'PUT',
+    url: `/api/todo/${listId}`,
+  })
+    .then((response) => {
+      console.log(`in client PUT, server response: ${response}`);
+      getTodoList();
+    })
+    .catch((error) => {
+      console.log(`No bueno in PUT-client, error: ${error}`);
       alert('error');
     });
 }
