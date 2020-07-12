@@ -5,12 +5,12 @@ $(document).ready(init);
 //TODO click events
 function init() {
   console.log(`$ReAdY, in init!`);
-  $('#addTask-btn').on('click', submitAddTask);
+  getTodoList();
+  $('.js-add-btn').on('click', submitAddTask);
 }
 
 //TODO capture user input EVENT
-function submitAddTask(event) {
-  event.preventDefault();
+function submitAddTask() {
   console.log('in submitAddTask');
   let payloadObject = {
     task_name: $('#new-task-input').val(),
@@ -22,7 +22,7 @@ function submitAddTask(event) {
 //TODO Ajax GET route
 //TODO retrieve from database and append task to page with delete and complete btns
 function getTodoList() {
-  //   $('.js-list-container').empty();
+  $('.ul-class').empty();
   $.ajax({
     type: 'GET',
     url: '/api/todo',
@@ -34,12 +34,14 @@ function getTodoList() {
 }
 
 function render(todoArray) {
-  $('.js-list-container').empty();
+  $('.ul-class').empty();
   for (let i = 0; i < todoArray.length; i++) {
     const listItem = todoArray[i];
-    $('.js-list-container').append(`
-    
-    <li>${listItem.task_name}</li>
+    $('.ul-class').append(`
+    <li>${listItem.task_name}
+    <button>Complete</button>
+    <button>Delete</button>
+    </li>
     
 `);
   }
