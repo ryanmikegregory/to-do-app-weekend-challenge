@@ -28,3 +28,7 @@ html, body {
     align-items: center;
     width: 75%;
 }
+
+.taskH2 {
+    text-align: center;
+}
