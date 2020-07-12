@@ -21,10 +21,19 @@ function submitAddTask(event) {
 
 //TODO Ajax GET route
 //TODO retrieve from database and append task to page with delete and complete btns
-function getTodoList(){
-    
+function getTodoList() {
+  $('.js-list-container').empty();
+  $.ajax({
+    type: 'GET',
+    url: '/api/todo',
+  }).then((dbResponse) => {
+    console.log('in client GET, server response', dbResponse);
+    // append database data to dom
+    //TODO render(dbResonse);
+  });
 }
 
+function render()
 
 //TODO send to server and then database
 //Ajax POST ROUTE
@@ -41,5 +50,4 @@ function postTodo(todoData) {
       console.log(`No bueno in POST-client ${error}`);
     });
 }
-
 
