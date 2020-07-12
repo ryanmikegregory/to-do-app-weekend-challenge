@@ -5,21 +5,26 @@ $(document).ready(init);
 //TODO click events
 function init() {
   console.log(`$ReAdY, in init!`);
-  $('#new-task-form').on('click', '#addTask-btn', submitAddTask);
+  $('#addTask-btn').on('click', submitAddTask);
 }
 
 //TODO capture user input EVENT
-function submitAddTask() {
+function submitAddTask(event) {
+  event.preventDefault();
+  console.log('in submitAddTask');
   let payloadObject = {
     task_name: $('#new-task-input').val(),
     completed: false,
   };
+  postTodo(payloadObject);
 }
+
+//TODO Ajax GET route
 
 //TODO send to server and then database
 
 //Ajax POST ROUTE
-function postTodo() {
+function postTodo(todoData) {
   $.ajax({
     type: 'POST',
     url: '/api/todo',

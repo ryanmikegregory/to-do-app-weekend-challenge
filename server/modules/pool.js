@@ -2,7 +2,7 @@ const pg = require('pg');
 const Pool = pg.Pool;
 
 const pool = new Pool({
-  database: 'weekend-to-do-app',
+  database: 'weekend_to_do_app_db',
   host: 'localhost',
   port: 5432,
   max: 10,
@@ -10,7 +10,7 @@ const pool = new Pool({
 });
 
 pool.on('connect', () => {
-  console.log('Postgres Connected!', connect);
+  console.log('Postgres Connected!');
 });
 
 pool.on('error', () => {
