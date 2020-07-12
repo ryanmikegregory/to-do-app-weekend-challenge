@@ -22,18 +22,28 @@ function submitAddTask(event) {
 //TODO Ajax GET route
 //TODO retrieve from database and append task to page with delete and complete btns
 function getTodoList() {
-  $('.js-list-container').empty();
+  //   $('.js-list-container').empty();
   $.ajax({
     type: 'GET',
     url: '/api/todo',
-  }).then((dbResponse) => {
-    console.log('in client GET, server response', dbResponse);
-    // append database data to dom
-    //TODO render(dbResonse);
+  }).then((response) => {
+    console.log('in client GET, server response', response);
+
+    render(response);
   });
 }
 
-function render()
+function render(todoArray) {
+  $('.js-list-container').empty();
+  for (let i = 0; i < todoArray.length; i++) {
+    const listItem = todoArray[i];
+    $('.js-list-container').append(`
+    
+    <li>${listItem.task_name}</li>
+    
+`);
+  }
+}
 
 //TODO send to server and then database
 //Ajax POST ROUTE
@@ -43,11 +53,10 @@ function postTodo(todoData) {
     url: '/api/todo',
     data: todoData,
   })
-    .then((dbResponse) => {
-      //get stuff//render call goes here renderList(dbResponse)
+    .then((response) => {
+      getTodoList();
     })
     .catch((error) => {
       console.log(`No bueno in POST-client ${error}`);
     });
 }
-

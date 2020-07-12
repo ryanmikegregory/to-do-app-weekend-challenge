@@ -2,7 +2,19 @@ const express = require('express'); //import express dependency
 const router = express.Router(); //tell router to use express
 const pool = require('../modules/pool'); //import pool
 
-module.exports = router; //export todo.router,js
+router.get('/', (req, res) => {
+  const queryText = `SELECT * FROM "todolist" ORDER BY "task_name" ASC;`;
+
+  pool
+    .query(queryText)
+    .then((dbResponse) => {
+      res.send(dbResponse.rows);
+    })
+    .catch((error) => {
+      console.log(`No Bueno in GET in todo.router ${error}`);
+      res.sendStatus(500);
+    });
+});
 
 router.post('/', (req, res) => {
   const todoData = req.body;
@@ -18,3 +30,5 @@ router.post('/', (req, res) => {
       res.sendStatus(500);
     });
 });
+
+module.exports = router; //export todo.router,js
