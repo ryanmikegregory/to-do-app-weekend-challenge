@@ -26,27 +26,29 @@ function getTodoList() {
   $.ajax({
     type: 'GET',
     url: '/api/todo',
-  }).then((response) => {
-    console.log('in client GET, server response', response);
-
-    render(response);
-  });
+  })
+    .then((response) => {
+      console.log('in client GET, server response', response);
+      render(response);
+    })
+    .catch((error) => {
+      console.log(`No bueno in GET-client ${error}`);
+    });
 }
 
-function render(todoArray) {
-  $('.ulClass').empty();
-  for (let i = 0; i < todoArray.length; i++) {
-    const listItem = todoArray[i];
-    $('.ulClass').append(`
-    <ul>
-    <li>${listItem.task_name}
-    <button class="jsCompleteBtn" data-id-list="${listItem.id}">COMPLETE</button>
-    <button class="jsDeleteBtn" data-id-list="${listItem.id}">DELETE</button>
-    </li>
-    </ul>
-    
-`);
-  }
+function deleteTask() {
+  console.log('in deleteTask');
+  $.ajax({
+    type: 'DELETE',
+    url: `/api/todo/${listId}`,
+  })
+    .then((response) => {
+      console.log('in client DELETE, server response', response);
+      getTodoList();
+    })
+    .catch((error) => {
+      console.log(`No bueno in DELETE-client ${error}`);
+    });
 }
 
 //TODO send to server and then database
@@ -63,4 +65,20 @@ function postTodo(todoData) {
     .catch((error) => {
       console.log(`No bueno in POST-client ${error}`);
     });
+}
+
+function render(todoArray) {
+  $('.ulClass').empty();
+  for (let i = 0; i < todoArray.length; i++) {
+    const listItem = todoArray[i];
+    $('.ulClass').append(`
+    <ul>
+    <li>${listItem.task_name}
+    <button class="jsCompleteBtn" data-id-list="${listItem.id}">COMPLETE</button>
+    <button class="jsDeleteBtn" data-id-list="${listItem.id}">DELETE</button>
+    </li>
+    </ul>
+    
+`);
+  }
 }
