@@ -7,7 +7,7 @@ function init() {
   console.log(`$ReAdY, in init!`);
   getTodoList();
   $('.addTaskBtn').on('click', submitAddTask);
-  $('.jsListContainer').on('click', '.jsDeleteBtn', deleteTaskOnClick);
+  $('.ulClass').on('click', '.jsDeleteBtn', deleteTaskOnClick);
 }
 
 //TODO capture user input EVENT
@@ -54,12 +54,12 @@ function postTodo(todoData) {
 }
 
 //Ajax DELETE route
-function deleteTask(list) {
-  event.preventDefault();
+function deleteTask(listId) {
+  // event.preventDefault();
   console.log('in deleteTask');
   $.ajax({
     type: 'DELETE',
-    url: `/api/todo/${id}`,
+    url: `/api/todo/${listId}`,
   })
     .then((response) => {
       console.log('in client DELETE, server response', response);
@@ -70,11 +70,13 @@ function deleteTask(list) {
     });
 }
 
-function deleteTaskOnClick() {
-  const id = $(this).data('listItemId');
+function deleteTaskOnClick(event) {
+  event.preventDefault();
+  const id = $(this).data('idList');
   deleteTask(id);
 }
 
+//////////////////////////////////
 function render(todoArray) {
   $('.ulClass').empty();
   for (let i = 0; i < todoArray.length; i++) {
@@ -82,12 +84,11 @@ function render(todoArray) {
     $('.ulClass').append(`
     <ul>
     <li>${listItem.task_name}
-    <button class="jsCompleteBtn" data-id-list="${listItem.id}">COMPLETE</button>
-    <button class="jsDeleteBtn" data-id-list="${listItem.id}">DELETE</button>
+    <button class="jsCompleteBtn" data-id-List="${listItem.id}">COMPLETE</button>
+    <button class="jsDeleteBtn" data-id-List="${listItem.id}">DELETE</button>
     </li>
     </ul>
     
 `);
   }
 }
-
