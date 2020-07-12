@@ -3,7 +3,7 @@ const bodyParser = require('body-parser'); //body-parser for json correctness
 const pg = require('pg'); //postgres
 const app = express();
 
-const todoRouter = require('./routes/todo.router');
+const todoRouter = require('./routes/todo.router'); //import todo.router.js
 
 const PORT = 5005;
 

@@ -1,5 +1,5 @@
-const express = require('express');
-const router = express.Router();
-const pool = require('../modules/pool');
+const express = require('express'); //import express dependency
+const router = express.Router(); //tell router to use express
+const pool = require('../modules/pool'); //import pool
 
-module.exports = router;
+module.exports = router; //export todo.router,js
